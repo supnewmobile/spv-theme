@@ -4,9 +4,11 @@ import './supervielle_colors.dart';
 
 class SupervielleTextStyles {
   static const String _fontFamily = 'Inter';
+  static const String _package = 'spv_theme';
 
   static const TextStyle xxxs = TextStyle(
     fontFamily: _fontFamily,
+    package: _package,
     fontSize: 10.0,
     letterSpacing: 0.1,
     height: 1.6,
@@ -14,45 +16,52 @@ class SupervielleTextStyles {
 
   static const TextStyle xxs = TextStyle(
     fontFamily: _fontFamily,
+    package: _package,
     fontSize: 12.0,
     letterSpacing: 0.1,
     height: 1.3,
   );
 
   static const TextStyle xs = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: _fontFamily,  
+    package: _package,
     fontSize: 14.0,
     letterSpacing: 0.1,
     height: 1.4,
   );
 
   static const TextStyle s = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: _fontFamily,  
+    package: _package,
     fontSize: 16.0,
     height: 1.5,
   );
 
   static const TextStyle m = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: _fontFamily,  
+    package: _package,
     fontSize: 20.0,
     height: 1.5,
   );
 
   static const TextStyle l = TextStyle(
     fontFamily: _fontFamily,
+    package: _package,
     fontSize: 24.0,
     height: 1.3,
   );
 
   static const TextStyle xl = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: _fontFamily,  
+    package: _package,
     fontSize: 32.0,
     letterSpacing: -0.5,
     height: 1.4,
   );
 
   static const TextStyle xxl = TextStyle(
-    fontFamily: _fontFamily,
+    fontFamily: _fontFamily,  
+    package: _package,
     fontSize: 40.0,
     letterSpacing: -0.5,
     height: 1.2,
