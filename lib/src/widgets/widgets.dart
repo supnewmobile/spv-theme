@@ -4,5 +4,8 @@ export './buttons/circle_button.dart';
 export './buttons/rounded_button.dart';
 export './cards/rounded_card.dart';
 export './dividers/thin_divider.dart';
+export './inputs/input.dart';
+export './inputs/underline_otp_input.dart';
+export './inputs/validated_input.dart';
 export './nav_bar/nav_bar.dart';
 export './pills/stadium_pill.dart';

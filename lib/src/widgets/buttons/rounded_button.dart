@@ -5,9 +5,10 @@ import '../../theme/theme.dart';
 abstract class RoundedButton extends StatelessWidget {
   const RoundedButton({
     Key? key,
-    required this.text,
-    this.minimumSize = const Size.fromHeight(0.0),
-    this.padding = const EdgeInsets.all(12.0),
+    this.text,
+    this.icon,
+    EdgeInsets? padding,
+    Size? minimumSize,
     this.borderSide,
     this.foregroundColor,
     this.backgroundColor,
@@ -15,11 +16,17 @@ abstract class RoundedButton extends StatelessWidget {
     this.opacity = 1.0,
     this.overlay,
     this.onPressed,
-  }) : super(key: key);
+  })  : assert(text != null || icon != null),
+        padding = padding ?? const EdgeInsets.all(12.0),
+        minimumSize = minimumSize ?? ((text != null) ? const Size.fromHeight(0.0) : const Size.square(0.0)),
+        super(key: key);
 
   const factory RoundedButton.translucent({
     Key? key,
-    required String text,
+    String? text,
+    IconData? icon,
+    EdgeInsets? padding,
+    Size? minimumSize,
     Color foregroundColor,
     double opacity,
     void Function()? onPressed,
@@ -27,7 +34,10 @@ abstract class RoundedButton extends StatelessWidget {
 
   const factory RoundedButton.fill({
     Key? key,
-    required String text,
+    String? text,
+    IconData? icon,
+    EdgeInsets? padding,
+    Size? minimumSize,
     Color foregroundColor,
     Color backgroundColor,
     Color disabledColor,
@@ -37,13 +47,17 @@ abstract class RoundedButton extends StatelessWidget {
 
   const factory RoundedButton.border({
     Key? key,
-    required String text,
+    String text,
+    IconData? icon,
+    EdgeInsets? padding,
+    Size? minimumSize,
     Color foregroundColor,
     BorderSide borderSide,
     void Function()? onPressed,
   }) = _RoundedBorderButton;
 
-  final String text;
+  final String? text;
+  final IconData? icon;
   final Size minimumSize;
   final EdgeInsets padding;
   final BorderSide? borderSide;
@@ -57,7 +71,18 @@ abstract class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      child: Text(text),
+      child: (text == null)
+          ? Icon(icon)
+          : Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(text!),
+                if (icon != null) ...[
+                  const SizedBox(width: 8.0),
+                  Icon(icon, size: 20.0),
+                ],
+              ],
+            ),
       style: ButtonStyle(
         minimumSize: MaterialStateProperty.all<Size>(minimumSize),
         shape: MaterialStateProperty.all<OutlinedBorder>(
@@ -108,7 +133,10 @@ abstract class RoundedButton extends StatelessWidget {
 class _RoundedTranslucentButton extends RoundedButton {
   const _RoundedTranslucentButton({
     Key? key,
-    required String text,
+    String? text,
+    IconData? icon,
+    EdgeInsets? padding,
+    Size? minimumSize,
     Color foregroundColor = SupervielleColors.grey900,
     Color backgroundColor = SupervielleColors.grey400,
     double opacity = 0.12,
@@ -116,6 +144,9 @@ class _RoundedTranslucentButton extends RoundedButton {
   }) : super(
           key: key,
           text: text,
+          icon: icon,
+          padding: padding,
+          minimumSize: minimumSize,
           foregroundColor: foregroundColor,
           backgroundColor: backgroundColor,
           opacity: opacity,
@@ -126,7 +157,10 @@ class _RoundedTranslucentButton extends RoundedButton {
 class _RoundedFillButton extends RoundedButton {
   const _RoundedFillButton({
     Key? key,
-    required String text,
+    String? text,
+    IconData? icon,
+    EdgeInsets? padding,
+    Size? minimumSize,
     Color foregroundColor = SupervielleColors.white,
     Color backgroundColor = SupervielleColors.red900,
     Color disabledColor = SupervielleColors.grey300,
@@ -135,6 +169,9 @@ class _RoundedFillButton extends RoundedButton {
   }) : super(
           key: key,
           text: text,
+          icon: icon,
+          padding: padding,
+          minimumSize: minimumSize,
           foregroundColor: foregroundColor,
           backgroundColor: backgroundColor,
           disabledColor: disabledColor,
@@ -146,7 +183,10 @@ class _RoundedFillButton extends RoundedButton {
 class _RoundedBorderButton extends RoundedButton {
   const _RoundedBorderButton({
     Key? key,
-    required String text,
+    String? text,
+    IconData? icon,
+    EdgeInsets? padding,
+    Size? minimumSize,
     Color foregroundColor = SupervielleColors.grey900,
     BorderSide borderSide = const BorderSide(
       color: SupervielleColors.grey900,
@@ -155,6 +195,9 @@ class _RoundedBorderButton extends RoundedButton {
   }) : super(
           key: key,
           text: text,
+          icon: icon,
+          padding: padding,
+          minimumSize: minimumSize,
           foregroundColor: foregroundColor,
           borderSide: borderSide,
           onPressed: onPressed,
