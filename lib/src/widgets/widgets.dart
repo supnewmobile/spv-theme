@@ -11,3 +11,4 @@ export './inputs/validated_input.dart';
 export './nav_bar/nav_bar.dart';
 export './pills/stadium_pill.dart';
 export './tiles/radio_tile.dart';
+export './page_indicator/page_indicator.dart';
