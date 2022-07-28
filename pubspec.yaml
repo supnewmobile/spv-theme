@@ -9,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: 0.23.0+1
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -38,3 +39,5 @@ flutter:
     - family: SupervielleIcons
       fonts:
         - asset: lib/fonts/icons/SupervielleIcons.ttf
+  assets:
+    - lib/assets/vectors/logos/
