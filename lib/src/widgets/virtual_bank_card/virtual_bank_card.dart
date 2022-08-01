@@ -20,14 +20,31 @@ extension on BankCardBrand {
 
 enum _LayoutType { big, small, list }
 
+class ExpirationDate {
+  const ExpirationDate({required this.title, this.month, this.year});
+
+  final String title;
+  final int? month;
+  final int? year;
+}
+
+class CVV {
+  const CVV({required this.title, this.number});
+
+  final String title;
+  final int? number;
+}
+
 class VirtualBankCard extends StatelessWidget {
-  VirtualBankCard._({
+  const VirtualBankCard._({
     Key? key,
     required this.brand,
     required this.type,
     required this.number,
     this.holder,
+    this.expirationDateTitle,
     this.expirationDate,
+    this.cvvTitle,
     this.cvv,
     this.footer,
     required this.background,
@@ -43,9 +60,8 @@ class VirtualBankCard extends StatelessWidget {
     required String type,
     required int number,
     required String holder,
-    int? expirationMonth,
-    int? expirationYear,
-    int? cvv,
+    required ExpirationDate expirationDate,
+    required CVV cvv,
     required Color background,
     bool ofuscate = true,
     required void Function(String number) onCopy,
@@ -54,10 +70,10 @@ class VirtualBankCard extends StatelessWidget {
     final formattedNumber = ofuscate
         ? '•••• •••• •••• ${cardNumber.substring(cardNumber.length - 4)}'
         : '${cardNumber.substring(0, 4)} ${cardNumber.substring(4, 8)} ${cardNumber.substring(8, 12)} ${cardNumber.substring(12, 16)}';
-    final month = '${expirationMonth ?? ''}'.padLeft(2, '0');
-    final year = '${expirationYear ?? ''}'.padLeft(2, '0');
+    final month = '${expirationDate.month ?? ''}'.padLeft(2, '0');
+    final year = '${expirationDate.year ?? ''}'.padLeft(2, '0');
     final formattedExpirationDate = ofuscate ? '••/••' : '$month/${year.substring(year.length - 2)}';
-    final formattedCVV = ofuscate ? '•••' : '${cvv ?? ''}'.padLeft(3, '0');
+    final formattedCVV = ofuscate ? '•••' : '${cvv.number ?? ''}'.padLeft(3, '0');
 
     return VirtualBankCard._(
       key: key,
@@ -65,7 +81,9 @@ class VirtualBankCard extends StatelessWidget {
       type: type,
       number: formattedNumber,
       holder: holder,
+      expirationDateTitle: expirationDate.title,
       expirationDate: formattedExpirationDate,
+      cvvTitle: cvv.title,
       cvv: formattedCVV,
       background: background,
       ofuscate: ofuscate,
@@ -124,7 +142,9 @@ class VirtualBankCard extends StatelessWidget {
   final String type;
   final String number;
   final String? holder;
+  final String? expirationDateTitle;
   final String? expirationDate;
+  final String? cvvTitle;
   final String? cvv;
   final String? footer;
   final Color background;
@@ -142,7 +162,9 @@ class VirtualBankCard extends StatelessWidget {
           type: type,
           number: number,
           holder: holder!,
+          expirationDateTitle: expirationDateTitle!,
           expirationDate: expirationDate!,
+          cvvTitle: cvvTitle!,
           cvv: cvv!,
           background: background,
           ofuscate: ofuscate,
@@ -176,7 +198,9 @@ class _BigVirtualBankCard extends StatelessWidget {
     required this.type,
     required this.number,
     required this.holder,
+    required this.expirationDateTitle,
     required this.expirationDate,
+    required this.cvvTitle,
     required this.cvv,
     required this.background,
     required this.ofuscate,
@@ -187,7 +211,8 @@ class _BigVirtualBankCard extends StatelessWidget {
   final String type;
   final String number;
   final String holder;
-  final String expirationDate;
+  final String expirationDateTitle;
+  final String expirationDate;final String cvvTitle;
   final String cvv;
   final Color background;
   final bool ofuscate;
@@ -268,7 +293,7 @@ class _BigVirtualBankCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'expire',
+                        expirationDateTitle,
                         overflow: TextOverflow.ellipsis,
                         style: SupervielleTextStyles.xxs.regular.white,
                       ),
@@ -289,7 +314,7 @@ class _BigVirtualBankCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'cvv',
+                       cvvTitle,
                         overflow: TextOverflow.ellipsis,
                         style: SupervielleTextStyles.xxs.regular.white,
                       ),

@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:spv_theme/spv_theme.dart';
 
+import '../../theme/theme.dart';
+import '../buttons/action_button.dart';
 
 const Duration _duration = Duration(seconds: 3);
 
 class Toast extends SnackBar {
   Toast({
+    Key? key,
     String? title,
-    required String description,
+    String? description,
     String? link,
     double? bottomMargin,
     required IconData icon,
     required Color accentColor,
     void Function()? onLinkTap,
   }) : super(
+          key: key,
           content: _Content(
             title: title,
             description: description,
@@ -36,12 +39,14 @@ class Toast extends SnackBar {
         );
 
   Toast.success({
+    Key? key,
     String? title,
-    required String description,
+    String? description,
     String? link,
     double? bottomMargin,
     void Function()? onLinkTap,
   }) : super(
+          key: key,
           content: _Content(
             title: title,
             description: description,
@@ -64,21 +69,20 @@ class Toast extends SnackBar {
         );
 
   Toast.warning({
+    Key? key,
     String? title,
-    required String description,
+    String? description,
     String? link,
     double bottomMargin = 0.0,
     void Function()? onLinkTap,
-    TextStyle? colorDescription,
-    Color? colorIcon,
   }) : super(
+          key: key,
           content: _Content(
             title: title,
             description: description,
-            colorDescription: colorDescription,
             link: link,
-            icon: SupervielleIcons.alert,
-            accentColor: colorIcon != null ? colorIcon : SupervielleColors.yellow200,
+            icon: SupervielleIcons.warning,
+            accentColor: SupervielleColors.yellow200,
             onLinkTap: onLinkTap,
           ),
           elevation: 0.0,
@@ -95,12 +99,14 @@ class Toast extends SnackBar {
         );
 
   Toast.info({
+    Key? key,
     String? title,
-    required String description,
+    String? description,
     String? link,
     double? bottomMargin,
     void Function()? onLinkTap,
   }) : super(
+          key: key,
           content: _Content(
             title: title,
             description: description,
@@ -123,12 +129,14 @@ class Toast extends SnackBar {
         );
 
   Toast.error({
+    Key? key,
     String? title,
-    required String description,
+    String? description,
     String? link,
     double? bottomMargin,
     void Function()? onLinkTap,
   }) : super(
+          key: key,
           content: _Content(
             title: title,
             description: description,
@@ -155,17 +163,16 @@ class _Content extends StatelessWidget {
   const _Content({
     Key? key,
     this.title,
-    required this.description,
-    this.colorDescription,
+    this.description,
     this.link,
     required this.icon,
     required this.accentColor,
     required this.onLinkTap,
-  }) : super(key: key);
+  })  : assert(title != null || description != null),
+        super(key: key);
 
   final String? title;
-  final String description;
-  final TextStyle? colorDescription;
+  final String? description;
   final String? link;
   final IconData icon;
   final Color accentColor;
@@ -192,18 +199,20 @@ class _Content extends StatelessWidget {
                     ),
                     child: Text(
                       title!,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: SupervielleTextStyles.s.bold.apply(
                         color: accentColor,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 4.0),
+                  if (description != null) const SizedBox(height: 4.0),
                 ],
-                Text(
-                  description,
-                  style: colorDescription != null ? colorDescription : SupervielleTextStyles.xs.regular.grey200,
-                ),
+                if (description != null)
+                  Text(
+                    description!,
+                    style: SupervielleTextStyles.xs.regular.grey200,
+                  ),
                 if (link != null) ...[
                   const SizedBox(height: 8.0),
                   GestureDetector(
