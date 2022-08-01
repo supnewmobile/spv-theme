@@ -10,12 +10,13 @@ class ThinDivider extends Divider {
     double indent = 0.0,
     double endIndent = 0.0,
   }) : super(
-    height: height,
-    color: color,
-    thickness: 1.0,
-    indent: indent,
-    endIndent: endIndent,
-  );
+          key: key,
+          height: height,
+          color: color,
+          thickness: 1.0,
+          indent: indent,
+          endIndent: endIndent,
+        );
 }
 
 class ThinVerticalDivider extends VerticalDivider {
@@ -26,10 +27,11 @@ class ThinVerticalDivider extends VerticalDivider {
     double indent = 0.0,
     double endIndent = 0.0,
   }) : super(
-    width: width,
-    color: color,
-    thickness: 1.0,
-    indent: indent,
-    endIndent: endIndent,
-  );
+          key: key,
+          width: width,
+          color: color,
+          thickness: 1.0,
+          indent: indent,
+          endIndent: endIndent,
+        );
 }
