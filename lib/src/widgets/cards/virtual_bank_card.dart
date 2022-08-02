@@ -6,12 +6,16 @@ import 'package:spv_theme/src/theme/supervielle_assets.dart';
 enum BankCardBrand { visa, visaDebit, mastercard }
 
 extension on BankCardBrand {
-  String get logo {
+  String getLogo(_LayoutType layoutType) {
     switch (this) {
       case BankCardBrand.visa:
         return SupervielleAssets.visaLogo;
       case BankCardBrand.visaDebit:
-        return SupervielleAssets.visaDebitLogo;
+        if (layoutType == _LayoutType.big) {
+          return SupervielleAssets.visaDebitLogo;
+        } else {
+          return SupervielleAssets.visaLogo;
+        }
       case BankCardBrand.mastercard:
         return SupervielleAssets.mastercardLogo;
     }
@@ -205,18 +209,22 @@ class _BigVirtualBankCard extends StatelessWidget {
     required this.background,
     required this.ofuscate,
     required this.onCopy,
-  }) : super(key: key);
+  })  : layoutType = _LayoutType.big,
+        super(key: key);
 
   final BankCardBrand brand;
   final String type;
   final String number;
   final String holder;
   final String expirationDateTitle;
-  final String expirationDate;final String cvvTitle;
+  final String expirationDate;
+  final String cvvTitle;
   final String cvv;
   final Color background;
   final bool ofuscate;
   final void Function(String number) onCopy;
+
+  final _LayoutType layoutType;
 
   @override
   Widget build(BuildContext context) {
@@ -232,7 +240,7 @@ class _BigVirtualBankCard extends StatelessWidget {
             Row(
               children: [
                 SvgPicture.asset(
-                  brand.logo,
+                  brand.getLogo(layoutType),
                   width: 40.0,
                   height: 40.0,
                 ),
@@ -314,7 +322,7 @@ class _BigVirtualBankCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                       cvvTitle,
+                        cvvTitle,
                         overflow: TextOverflow.ellipsis,
                         style: SupervielleTextStyles.xxs.regular.white,
                       ),
@@ -348,7 +356,8 @@ class _SmallVirtualBankCard extends StatelessWidget {
     required this.footer,
     required this.background,
     required this.onPressed,
-  }) : super(key: key);
+  })  : layoutType = _LayoutType.small,
+        super(key: key);
 
   final BankCardBrand brand;
   final String type;
@@ -356,6 +365,8 @@ class _SmallVirtualBankCard extends StatelessWidget {
   final String? footer;
   final Color background;
   final void Function() onPressed;
+
+  final _LayoutType layoutType;
 
   @override
   Widget build(BuildContext context) {
@@ -396,7 +407,7 @@ class _SmallVirtualBankCard extends StatelessWidget {
                 ),
               ),
               SvgPicture.asset(
-                brand.logo,
+                brand.getLogo(layoutType),
                 width: 48.0,
                 height: 48.0,
               ),
@@ -417,13 +428,16 @@ class _ListVirtualBankCard extends StatelessWidget {
     required this.number,
     required this.background,
     required this.onPressed,
-  }) : super(key: key);
+  })  : layoutType = _LayoutType.list,
+        super(key: key);
 
   final BankCardBrand brand;
   final String type;
   final String number;
   final Color background;
   final void Function() onPressed;
+
+  final _LayoutType layoutType;
 
   @override
   Widget build(BuildContext context) {
@@ -441,7 +455,7 @@ class _ListVirtualBankCard extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: SvgPicture.asset(
-                  brand.logo,
+                  brand.getLogo(layoutType),
                   width: 40.0,
                   height: 40.0,
                 ),
